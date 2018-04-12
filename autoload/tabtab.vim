@@ -1,7 +1,7 @@
 if exists("g:autoloaded_tabtab") | finish | endif
 let g:autoloaded_tabtab = 1
 
-func! tabtab#complete_or_indent(direction)
+func! tabtab#complete_or_indent(direction) abort
   " complete if popup-menu displayed
   if pumvisible() | return s:complete(a:direction) | endif
 
@@ -26,20 +26,20 @@ func! tabtab#complete_or_indent(direction)
   return s:complete(a:direction)
 endf
 
-func! s:finishing_word(line, col)
+func! s:finishing_word(line, col) abort
   " preceded by word/filename char AND NOT inside word
   return a:line[a:col-1] =~ '\k\|[/~.]' && a:line[a:col] !~ '\k'
 endf
 
-func! s:want_tab()
+func! s:want_tab() abort
   " this needs to be smarter
   return ! &expandtab
 endf
 
-func! s:complete(direction)
+func! s:complete(direction) abort
   return a:direction > 0 ? "\<C-N>" : "\<C-P>"
 endf
 
-func! s:indent()
+func! s:indent() abort
   return (!empty(&indentexpr) || &cindent) ? "\<C-F>" : "\<Tab>"
 endf
